@@ -1,9 +1,13 @@
+import java.util.ArrayList;
 public class Node<Key extends Comparable<Key>, Value> {
 
     private Key key;
     private Value value;
-    private Node<Key, Value> left;
-    private Node<Key, Value> right;
+    private int depth;
+    private ArrayList<Node> childConnections;// = new ArrayList<Node>();
+    private ArrayList<Node> parentConnections;
+    //private Node<Key, Value> left;///need an arraylist of nodes
+    //private Node<Key, Value> right;//need an arraylist of nodes
     private int size;
 
     public Node(Key key, Value value, int size) {
@@ -36,10 +40,12 @@ public class Node<Key extends Comparable<Key>, Value> {
         this.value = value;
     }
 
-    public Node<Key, Value> getLeft() {
-        return left;
+    public Node<Key, Value> getChildConnection(int i) {
+        return childConnections.get(i);
     }
-
+    public Node<Key, Value> getParentConnection(int i) {
+        return parentConnections.get(i);
+    }
     public void setLeft(Node<Key, Value> left) {
         this.left = left;
     }
