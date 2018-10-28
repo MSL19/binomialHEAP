@@ -1,6 +1,8 @@
+import java.util.ArrayList;
+
 public class binomialHeap <Key extends Comparable<Key>, Value>{
     private ArrayList<Node> root;
-    public binomialHeap(ArrayList<nodes> root){
+    public binomialHeap(ArrayList<Node> root){
         this.root = root;
     }
     public int size(){
@@ -12,28 +14,71 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
     private void addToRoot(Node n){
         root.add(n);
     }
-
-    private void totalSize(root){
+    private void deleteFromRoot(int i){
+        root.remove(i);
+    }
+    /*private void totalSize(ArrayList<Node> root){
         int s = 0;
         for(int i = 0; i < root.size(); i++){
-            i.getNumChildren()
+            i.getNumChildren();
         }
-    }
+    }*/
     private void addToRoot(int i, Node n){
         root.add(i, n);
     }
 
+
     public void merge(binomialHeap heap){
-        for(int i =0; i<heap.size(); i++){
-            Node temp = heap.get(i);
-            for(int j =0; j<size(); j++)
-            {
-                if(temp.getKey().compareTo(root.get(j).getKey())==0 && temp.getNumChildren() <= root.get(j).getNumChildren()){
-                    addToRoot(j, temp);
-                }
+        int i = 0;
+        int j = 0;
+        binomialHeap temp = new binomialHeap(null);
+        while(i<heap.size()&&j<root.size()){
+            //check that heap.get(i) doesn't = null and same for root
+           if(heap.get(i)!=null&&root.get(j)!=null) {
+               if (heap.get(i).getNumChildren()==root.get(j).getNumChildren()) { //same order
+                   if(heap.get(i).getKey().compareTo(root.get(j).getKey())>=0){ //comparing the actual keys
+                       temp.addToRoot(root.get(j));
+                       j++;
+                   }
+                   else{
+                       temp.addToRoot(heap.get(i));
+                       i++;
+                   }
+
+
+               }
+               else if(heap.get(i).getNumChildren()>root.get(j).getNumChildren()) {
+                   temp.addToRoot(root.get(j));
+                   j++;
+               }
+               else {
+                    temp.addToRoot(heap.get(i));
+                    i++;
+               }
+           }
+           else if(heap.get(i)==null){
+               temp.addToRoot(root.get(j));
+               j++;
+           }
+           else if(root.get(j)==null){
+               temp.addToRoot(heap.get(i));
+               i++;
+           }
+        }
+        //added trees to a temp heap
+
+        //now we combine the trees with the same order
+
+        for(int k = 0; k<temp.size(); k++){
+            if(temp.get(k).getNumChildren === temp.get(k++).getNumChildren){
+                Node t1 = temp.get(k);
+                Node t2 = temp.get(k++);
+                temp.deleteFromRoot(k++);
+                temp.deletFromRoot(k);
+                Node t3 = t1.addChild(t2);
+                temp.add(k, t3);
             }
         }
-
     }
 
 

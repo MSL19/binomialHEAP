@@ -47,16 +47,16 @@ public class Node<Key extends Comparable<Key>, Value> {
         return parentConnections.get(i);
     }
     public void addChild(Node<Key, Value> child) {
-        this.childConnections.add(child)
+        this.childConnections.add(child);
     }
     public int getNumChildren(){
         return childConnections.size();
     }
 
-    public int getTotalChildren(){ //this will retunr the total number of children of a given  node through recursivley meming
+  //  public int getTotalChildren(){ //this will retunr the total number of children of a given  node through recursivley meming
         //we will use this in our for loop that gets the total number of nodes so be can do some binary math and figure out the suff
 
-    }
+    //}
     public int getSize() {
         return size;
     }
