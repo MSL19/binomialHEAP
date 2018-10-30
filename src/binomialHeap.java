@@ -27,6 +27,32 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
         root.add(i, n);
     }
 
+    private void put(Node n){
+        ArrayList<Node> nodeArr = new ArrayList();
+        nodeArr.add(n);
+        binomialHeap temp = new binomialHeap(nodeArr);
+        merge(temp);
+
+    }
+
+    public String toString(){
+        String str = new String();
+        for(int i =0; i<root.size(); i++){
+           // s+=root.get(i).get
+            //if(root.get(i).getNumChildren == 0){
+                str+=root.get(i);
+            //}
+            str += recString(str, root.get(i));//assuming that this works
+        }
+    }
+
+    private String recString(String s, Node n){
+        for(int i = 0; i<n.getNumChildren(); i++){
+            s+=n.getChildConnection(i);
+            s+=recString(s,n.getChildConnection(i));
+        }
+        return s;
+    }
 
     public void merge(binomialHeap heap){
         int i = 0;
@@ -70,13 +96,14 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
         //now we combine the trees with the same order
 
         for(int k = 0; k<temp.size(); k++){
-            if(temp.get(k).getNumChildren === temp.get(k++).getNumChildren){
+            if(temp.get(k).getNumChildren() == temp.get(k++).getNumChildren()){
                 Node t1 = temp.get(k);
                 Node t2 = temp.get(k++);
                 temp.deleteFromRoot(k++);
-                temp.deletFromRoot(k);
-                Node t3 = t1.addChild(t2);
-                temp.add(k, t3);
+                temp.deleteFromRoot(k);
+                t1.addChild(t2);
+                Node t3 = t1;
+                temp.addToRoot(k, t3);
             }
         }
     }
