@@ -3,7 +3,9 @@ import java.util.ArrayList;
 public class binomialHeap <Key extends Comparable<Key>, Value>{
     private ArrayList<Node> root;
     public binomialHeap(ArrayList<Node> root){
+        root = new ArrayList<Node>();
         this.root = root;
+
     }
     public int size(){
         return root.size();
@@ -26,8 +28,28 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
     private void addToRoot(int i, Node n){
         root.add(i, n);
     }
-
-    private void put(Node n){
+    public Node get(Key k){
+        for(int i =0; i<root.size(); i++){
+            if(root.get(i).getKey()==k){
+                return root.get(i);
+            }
+            Node n = recursiveGet(k, root.get(i));
+            if(n!=null){
+                return n;
+            }
+        }
+        return null;
+    }
+    private Node recursiveGet(Key k, Node n){
+        if(n.getKey().equals(k)){
+            return n;
+        }
+        for(int i=0; i<n.getNumChildren(); i++){
+            return recursiveGet(k,n.getChildConnection(i));
+        }
+        return null;
+    }
+    public void put(Node n){
         ArrayList<Node> nodeArr = new ArrayList();
         nodeArr.add(n);
         binomialHeap temp = new binomialHeap(nodeArr);
@@ -37,20 +59,28 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
 
     public String toString(){
         String str = new String();
-        for(int i =0; i<root.size(); i++){
-           // s+=root.get(i).get
-            //if(root.get(i).getNumChildren == 0){
-                str+=root.get(i);
-            //}
-            str += recString(str, root.get(i));//assuming that this works
+       /* if(root.size() <= 1){
+            str=root.get(0);
         }
+        else {*/
+            for (int i = 0; i < root.size(); i++) {
+                // s+=root.get(i).get
+                //if(root.get(i).getNumChildren == 0){
+                str += root.get(i);
+                //}
+                str += recString(str, root.get(i));//assuming that this works
+            }
+  //      }
+        return str;
     }
 
     private String recString(String s, Node n){
-        for(int i = 0; i<n.getNumChildren(); i++){
-            s+=n.getChildConnection(i);
-            s+=recString(s,n.getChildConnection(i));
-        }
+
+            for (int i = 0; i < n.getNumChildren(); i++) {
+                s += n.getChildConnection(i);
+                s += recString(s, n.getChildConnection(i));
+            }
+
         return s;
     }
 
@@ -105,6 +135,8 @@ public class binomialHeap <Key extends Comparable<Key>, Value>{
                 Node t3 = t1;
                 temp.addToRoot(k, t3);
             }
+
+
         }
     }
 

@@ -8,12 +8,13 @@ public class Node<Key extends Comparable<Key>, Value> {
     private ArrayList<Node> parentConnections;
     //private Node<Key, Value> left;///need an arraylist of nodes
     //private Node<Key, Value> right;//need an arraylist of nodes
-    private int size;
 
-    public Node(Key key, Value value, int size) {
+    public Node(Key key, Value value) {
         this.key = key;
         this.value = value;
-        this.size = size;
+        childConnections = new ArrayList<Node>();
+        parentConnections = new ArrayList<Node>();
+        //we need to initialize the arraylists here
     }
 
     @Override
@@ -50,6 +51,7 @@ public class Node<Key extends Comparable<Key>, Value> {
         this.childConnections.add(child);
     }
     public int getNumChildren(){
+
         return childConnections.size();
     }
 
@@ -57,11 +59,6 @@ public class Node<Key extends Comparable<Key>, Value> {
         //we will use this in our for loop that gets the total number of nodes so be can do some binary math and figure out the suff
 
     //}
-    public int getSize() {
-        return size;
-    }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+
 }
